@@ -34,7 +34,7 @@ func (s *sender) queueAdd(msg Message, isErr bool) error {
 		IsError: isErr,
 	}
 
-	if msg.Image != "" {
+	if msg.Image != "" || len(msg.ImageBytes) > 0 {
 
 		sP := sendPhoto{
 			ChatID:         cmp.Or(debugChatId, msg.ChatID),
