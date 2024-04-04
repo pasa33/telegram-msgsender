@@ -13,21 +13,21 @@ func (m *Message) AddLine(s string) {
 }
 
 func MakeText(text string) string {
-	return validateLine(text)
+	return ValidateLine(text)
 }
 
 func MakeUrl(text, url string) string {
-	return fmt.Sprintf("[%s](%s)", validateLine(text), validateUrl(url))
+	return fmt.Sprintf("[%s](%s)", ValidateLine(text), ValidateUrl(url))
 }
 
-func validateUrl(s string) string {
+func ValidateUrl(s string) string {
 	for _, v := range urlChar {
 		s = strings.ReplaceAll(s, v, `\`+v)
 	}
 	return s
 }
 
-func validateLine(s string) string {
+func ValidateLine(s string) string {
 	for _, v := range txtChar {
 		s = strings.ReplaceAll(s, v, `\`+v)
 	}

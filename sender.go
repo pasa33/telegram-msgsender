@@ -95,7 +95,7 @@ func (s *sender) initSender() {
 						retry = false
 					case 429:
 						//ratelimitDelay, _ := strconv.Atoi(res.Header.Get("retry-after"))
-						log.Printf("[discord-whsender] Ratelimited: %dms (%s)\n", "aaaa", s.BotToken)
+						log.Printf("[telegram-messagesender] Ratelimited - %s\n", s.BotToken)
 						time.Sleep(time.Duration(1000) * time.Millisecond)
 						retry = true
 					default:

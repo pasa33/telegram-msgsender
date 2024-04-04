@@ -3,6 +3,7 @@ package telegrammsgsender
 import (
 	"bytes"
 	"cmp"
+	"fmt"
 	"mime/multipart"
 	"strings"
 )
@@ -63,7 +64,7 @@ func (s *sender) queueAdd(msg Message, isErr bool) error {
 				return err
 			}
 			if sP.MessageThreadID != nil {
-				if err := writer.WriteField("message_thread_id", string(*sP.MessageThreadID)); err != nil {
+				if err := writer.WriteField("message_thread_id", fmt.Sprintln(*sP.MessageThreadID)); err != nil {
 					return err
 				}
 			}
