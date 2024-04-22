@@ -41,7 +41,7 @@ func (s *sender) queueAdd(msg Message, isErr bool) error {
 			Photo:          msg.Image,
 			Caption:        strings.Join(msg.ContentLines, "\n"),
 			ParseMode:      cmp.Or(msg.ParseMode, "MarkdownV2"),
-			ProtectContent: true,
+			ProtectContent: msg.ProtectContent,
 		}
 		if msg.MessageThreadID != 0 && debugChatId == "" {
 			sP.MessageThreadID = &msg.MessageThreadID
@@ -97,12 +97,11 @@ func (s *sender) queueAdd(msg Message, isErr bool) error {
 			p.ContentType = "application/json"
 		}
 	} else { //without photo
-
 		sM := sendMessage{
 			ChatID:         cmp.Or(debugChatId, msg.ChatID),
 			Text:           strings.Join(msg.ContentLines, "\n"),
 			ParseMode:      cmp.Or(msg.ParseMode, "MarkdownV2"),
-			ProtectContent: true,
+			ProtectContent: msg.ProtectContent,
 		}
 		if msg.MessageThreadID != 0 && debugChatId == "" {
 			sM.MessageThreadID = &msg.MessageThreadID
