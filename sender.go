@@ -13,9 +13,9 @@ import (
 )
 
 var (
-	senders     sync.Map
-	json        = jsoniter.ConfigCompatibleWithStandardLibrary
-	errChatId   string
+	senders sync.Map
+	json    = jsoniter.ConfigCompatibleWithStandardLibrary
+	//errChatId   string
 	debugChatId string
 )
 
@@ -41,9 +41,9 @@ func (msg Message) Send(botToken string, mergeEmbeds ...bool) error {
 
 // Set global error webhook url
 // for unset, just set to empty string
-func SetErrorChatId(chatId string) {
-	errChatId = chatId
-}
+// func SetErrorChatId(chatId string) {
+// 	errChatId = chatId
+// }
 
 // Set debug webhook
 // that override every whs
@@ -99,13 +99,9 @@ func (s *sender) initSender() {
 						time.Sleep(time.Duration(3000) * time.Millisecond)
 						retry = true
 					default:
-						// if !p.IsError {
-						// 	bbody, _ := io.ReadAll(res.Body)
-						// 	sendError(s.BotToken, res.Status, p.Bytes, bbody)
-						// }
 						bbody, _ := io.ReadAll(res.Body)
-						fmt.Println("error: " + res.Status)
-						fmt.Println(string(bbody))
+						log.Printf("[telegram-messagesender] SendError(%d): - %s\n", res.StatusCode, string(bbody))
+						log.Printf("[telegram-messagesender] Payload: %s", string(p.Bytes))
 						retry = false
 					}
 					res.Body.Close()
