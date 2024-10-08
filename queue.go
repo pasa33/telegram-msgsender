@@ -77,7 +77,7 @@ func (s *sender) queueAdd(msg Message, isErr bool) error {
 			if err := writer.WriteField("parse_mode", sP.ParseMode); err != nil {
 				return err
 			}
-			if err := writer.WriteField("protect_content", "true"); err != nil {
+			if err := writer.WriteField("protect_content", fmt.Sprintf("%t", sP.ProtectContent)); err != nil {
 				return err
 			}
 			writer.Close()
