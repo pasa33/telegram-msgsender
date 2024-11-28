@@ -39,6 +39,13 @@ func (msg Message) Send(botToken string, mergeEmbeds ...bool) error {
 	return sender.queueAdd(msg, false)
 }
 
+func (msg Message) SendV2(botToken string, chatId string, threadId int, mergeEmbeds ...bool) error {
+	msg.ChatID = chatId
+	msg.MessageThreadID = threadId
+	sender := getSender(botToken)
+	return sender.queueAdd(msg, false)
+}
+
 // Set global error webhook url
 // for unset, just set to empty string
 // func SetErrorChatId(chatId string) {
