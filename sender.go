@@ -16,7 +16,9 @@ var (
 	senders sync.Map
 	json    = jsoniter.ConfigCompatibleWithStandardLibrary
 	//errChatId   string
-	debugChatId string
+	debugChatId   string
+	debugBotToken string
+	debugThreadId int
 )
 
 type sender struct {
@@ -40,6 +42,12 @@ func (msg Message) Send(botToken string, mergeEmbeds ...bool) error {
 }
 
 func (msg Message) SendV2(botToken string, chatId string, threadId int, mergeEmbeds ...bool) error {
+
+	if debugBotToken != "" {
+		botToken = debugBotToken
+		chatId = debugChatId
+		threadId = debugThreadId
+	}
 	msg.ChatID = chatId
 	msg.MessageThreadID = threadId
 	sender := getSender(botToken)
@@ -54,8 +62,10 @@ func (msg Message) SendV2(botToken string, chatId string, threadId int, mergeEmb
 
 // Set debug webhook
 // that override every whs
-func SetDebugChatId(chatId string) {
+func SetDebugBot(botToken string, chatId string, threadId int) {
+	debugBotToken = botToken
 	debugChatId = chatId
+	debugThreadId = threadId
 }
 
 func newSender(token string) *sender {
