@@ -37,11 +37,12 @@ func (s *sender) queueAdd(msg Message, isErr bool) error {
 	if msg.Image != "" || len(msg.ImageBytes) > 0 {
 
 		sP := sendPhoto{
-			ChatID:         cmp.Or(debugChatId, msg.ChatID),
-			Photo:          msg.Image,
-			Caption:        strings.Join(msg.ContentLines, "\n"),
-			ParseMode:      cmp.Or(msg.ParseMode, "MarkdownV2"),
-			ProtectContent: msg.ProtectContent,
+			ChatID:             cmp.Or(debugChatId, msg.ChatID),
+			Photo:              msg.Image,
+			Caption:            strings.Join(msg.ContentLines, "\n"),
+			ParseMode:          cmp.Or(msg.ParseMode, "MarkdownV2"),
+			ProtectContent:     msg.ProtectContent,
+			DisableLinkPreview: msg.DisableLinkPreview,
 		}
 		if msg.MessageThreadID != 0 && debugChatId == "" {
 			sP.MessageThreadID = &msg.MessageThreadID
@@ -98,10 +99,11 @@ func (s *sender) queueAdd(msg Message, isErr bool) error {
 		}
 	} else { //without photo
 		sM := sendMessage{
-			ChatID:         cmp.Or(debugChatId, msg.ChatID),
-			Text:           strings.Join(msg.ContentLines, "\n"),
-			ParseMode:      cmp.Or(msg.ParseMode, "MarkdownV2"),
-			ProtectContent: msg.ProtectContent,
+			ChatID:             cmp.Or(debugChatId, msg.ChatID),
+			Text:               strings.Join(msg.ContentLines, "\n"),
+			ParseMode:          cmp.Or(msg.ParseMode, "MarkdownV2"),
+			ProtectContent:     msg.ProtectContent,
+			DisableLinkPreview: msg.DisableLinkPreview,
 		}
 		if msg.MessageThreadID != 0 && debugChatId == "" {
 			sM.MessageThreadID = &msg.MessageThreadID
